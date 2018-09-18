@@ -63,7 +63,7 @@ plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
   cargo
-  code
+  rust
   tmux
   colored-man-pages
 )
