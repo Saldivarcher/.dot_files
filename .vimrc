@@ -41,10 +41,11 @@ set mat=2
 " Maps 'ctrl-n' to open nerdtree
 map <C-n> :NERDTreeToggle<CR>
 map <C-o> :NERDTreeFind<CR>
-let NERDTreeQuitOnOpen=1
 
+let NERDTreeQuitOnOpen=1
 let NERDTreeIgnore =['\.pyc$', '\.o$', '\.a$', '\.cbor$']
 
+" YouCompleteMe options 
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_show_diagnostics_ui = 0
 let g:ycm_goto_buffer_command = 'new-tab'
@@ -61,11 +62,12 @@ nnoremap <leader>nt :tabnew<CR>
 nnoremap <leader>hh :tabprevious<CR>
 nnoremap <leader>ll :tabnext<CR>
 " Unhighlights search results
-nnoremap <Leader><space> :noh<cr>
+nnoremap <leader><space> :noh<cr>
+
+" Opens a new terminal in a newtab
+nnoremap <leader>tt :tabnew<CR>:terminal<CR>
 " Use Esc to exit terminal-mode
 tnoremap <Esc> <C-\><C-n>
-
-
 
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
