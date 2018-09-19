@@ -40,8 +40,9 @@ set mat=2
 
 " Maps 'ctrl-n' to open nerdtree
 map <C-n> :NERDTreeToggle<CR>
-map <C-o> :NERDTreeFind<CR>
+map <C-m> :NERDTreeFind<CR>
 
+" NERD Tree options
 let NERDTreeQuitOnOpen=1
 let NERDTreeIgnore =['\.pyc$', '\.o$', '\.a$', '\.cbor$']
 
@@ -52,8 +53,11 @@ let g:ycm_goto_buffer_command = 'new-tab'
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_confirm_extra_conf = 0
 
-" This creates a leader, ',', which shortens the commands below
-let mapleader=","
+" Vim-sneak
+let g:sneak#label = 1
+
+" space is my leader key
+let mapleader=' '
 nnoremap <leader>gt :YcmCompleter GoTo<CR>
 nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
