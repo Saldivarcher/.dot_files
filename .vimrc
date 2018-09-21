@@ -54,6 +54,7 @@ let g:ycm_confirm_extra_conf = 0
 let g:sneak#label = 1
 
 " Removes whitespace from a file
+" https://vi.stackexchange.com/questions/454/whats-the-simplest-way-to-strip-trailing-whitespace-from-all-lines-in-a-file
 fun! TrimWhitespace()
     let l:save = winsaveview()
     keeppatterns %s/\s\+$//e
