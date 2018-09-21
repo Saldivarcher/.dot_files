@@ -3,6 +3,8 @@ set background=dark
 set t_Co=256
 set nocompatible
 
+set encoding=UTF-8
+
 colorscheme Iosvkem
 
 syntax on
@@ -38,15 +40,10 @@ set whichwrap+=<,>,h,l
 set showmatch
 set mat=2
 
-" Maps 'ctrl-n' to open nerdtree
-map <C-n> :NERDTreeToggle<CR>
-map <C-m> :NERDTreeFind<CR>
+" Lowers brightness on matching brackets
+hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
-" NERD Tree options
-let NERDTreeQuitOnOpen=1
-let NERDTreeIgnore =['\.pyc$', '\.o$', '\.a$', '\.cbor$']
-
-" YouCompleteMe options 
+" YouCompleteMe options
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_show_diagnostics_ui = 0
 let g:ycm_goto_buffer_command = 'new-tab'
@@ -56,6 +53,14 @@ let g:ycm_confirm_extra_conf = 0
 " Vim-sneak
 let g:sneak#label = 1
 
+" Removes whitespace from a file
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
+command! TrimWhitespace call TrimWhitespace()
 " space is my leader key
 let mapleader=' '
 nnoremap <leader>gt :YcmCompleter GoTo<CR>
@@ -63,17 +68,28 @@ nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gi :YcmCompleter GoToInclude<CR>
 nnoremap <leader>nt :tabnew<CR>
+nnoremap <leader>bt :-tabnew<CR>
 nnoremap <leader>hh :tabprevious<CR>
 nnoremap <leader>ll :tabnext<CR>
 " Unhighlights search results
 nnoremap <leader><space> :noh<cr>
+nnoremap <leader>dw :TrimWhitespace<cr>
 
 " Opens a new terminal in a newtab
 nnoremap <leader>tt :tabnew<CR>:terminal<CR>
+nnoremap <leader>ot :terminal<CR>
 " Use Esc to exit terminal-mode
 tnoremap <Esc> <C-\><C-n>
 
-hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
+
+" Maps 'ctrl-n' to open nerdtree
+map <C-n> :NERDTreeToggle<CR>
+map <C-o> :NERDTreeFind<CR>
+
+" NERD Tree options
+let NERDTreeQuitOnOpen=1
+let NERDTreeIgnore =['\.pyc$', '\.o$', '\.a$', '\.cbor$']
+let NERDTreeMinimalUI = 1
 
 "NERDTrees File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
@@ -90,7 +106,6 @@ call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
 call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
 call NERDTreeHighlightFile('bp', 'yellow', 'none', 'yellow', '#151515')
 call NERDTreeHighlightFile('go', 'cyan', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('c', 'cyan', 'none', 'cyan', '#151515')
 call NERDTreeHighlightFile('h', 'Magenta', 'none', 'red', '#151515')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('toml', 'Magenta', 'none', '#ff00ff', '#151515')
