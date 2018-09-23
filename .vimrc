@@ -1,4 +1,14 @@
-execute pathogen#infect()
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree'
+Plug 'airblade/vim-gitgutter'
+Plug 'Valloric/YouCompleteMe'
+Plug 'vim-airline/vim-airline'
+Plug 'jremmen/vim-ripgrep'
+Plug 'raimondi/delimitmate'
+Plug 'justinmk/vim-syntax-extra'
+Plug 'justinmk/vim-sneak'
+call plug#end()
+
 set background=dark
 set t_Co=256
 set nocompatible
@@ -18,7 +28,6 @@ set expandtab
 set shiftwidth=4
 
 set autoindent
-set smartindent
 set cindent
 set smarttab
 
