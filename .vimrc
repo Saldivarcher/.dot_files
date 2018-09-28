@@ -9,6 +9,10 @@ Plug 'justinmk/vim-syntax-extra'
 Plug 'justinmk/vim-sneak'
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'rust-lang/rust.vim'
+Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-dispatch'
 call plug#end()
 
 set background=dark
@@ -64,6 +68,8 @@ let g:ycm_confirm_extra_conf = 0
 " Vim-sneak
 let g:sneak#label = 1
 
+autocmd FileType rust let b:dispatch = 'cargo build'
+
 " Removes whitespace from a file
 " https://vi.stackexchange.com/questions/454/whats-the-simplest-way-to-strip-trailing-whitespace-from-all-lines-in-a-file
 fun! TrimWhitespace()
@@ -83,21 +89,29 @@ nnoremap <leader>nt :tabnew<CR>
 nnoremap <leader>bt :-tabnew<CR>
 nnoremap <leader>hh :tabprevious<CR>
 nnoremap <leader>ll :tabnext<CR>
-nnoremap <leader>rr  :FZF<CR>
+nnoremap <leader>rr :FZF<CR>
+
+" close a quickfix window
+nnoremap <leader>cw :ccl<CR>
+
 " Unhighlights search results
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>dw :TrimWhitespace<cr>
+nnoremap <F7>  :Dispatch!<CR>
+
 
 " Opens a new terminal in a newtab
 nnoremap <leader>tt :tabnew<CR>:terminal<CR>
 nnoremap <leader>ot :terminal<CR>
+
 " Use Esc to exit terminal-mode
 tnoremap <Esc> <C-\><C-n>
 
 
 " Maps 'ctrl-n' to open nerdtree
-map <C-n> :NERDTreeToggle<CR>
-map <C-o> :NERDTreeFind<CR>
+map  <C-n> :NERDTreeToggle<CR>
+map  <C-o> :NERDTreeFind<CR>
+nmap <F8>  :TagbarToggle<CR>
 
 " NERD Tree options
 let NERDTreeQuitOnOpen=1
