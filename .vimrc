@@ -7,7 +7,12 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'raimondi/delimitmate'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'justinmk/vim-sneak'
-Plug '~/.fzf'
+if has('unix')
+    Plug '~/.fzf'
+endif
+if has('macunix')
+    Plug '/usr/local/opt/fzf'
+endif
 Plug 'junegunn/fzf.vim'
 call plug#end()
 
