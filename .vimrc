@@ -89,7 +89,10 @@ nnoremap <leader>nt :tabnew<CR>
 nnoremap <leader>bt :-tabnew<CR>
 nnoremap <leader>hh :tabprevious<CR>
 nnoremap <leader>ll :tabnext<CR>
+nnoremap <leader>vs :vsplit<CR>
 nnoremap <leader>rr :FZF<CR>
+nnoremap <leader>bs :set scrollback=1<CR>
+nnoremap <leader>bd :set scrollback=100000<CR>
 
 " close a quickfix window
 nnoremap <leader>cw :ccl<CR>
@@ -97,7 +100,9 @@ nnoremap <leader>cw :ccl<CR>
 " Unhighlights search results
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>dw :TrimWhitespace<cr>
-nnoremap <F7>  :Dispatch!<CR>
+
+nnoremap <F7> :Dispatch!<CR>
+nnoremap <F6> :Cargo build<CR>
 
 
 " Opens a new terminal in a newtab
