@@ -73,7 +73,14 @@ let g:ycm_confirm_extra_conf = 0
 " Vim-sneak
 let g:sneak#label = 1
 
-autocmd FileType rust let b:dispatch = 'cargo build'
+if filereadable('/proc/cpuinfo')
+    let n = system('grep -c ^processor /proc/cpuinfo')
+    let cpu_count = (n > 1 ? ('-j'.(n)): '')
+else
+    let cpu_count = ''
+endif
+
+autocmd FileType rust let b:dispatch = "cargo build " . cpu_count
 
 " Removes whitespace from a file
 " https://vi.stackexchange.com/questions/454/whats-the-simplest-way-to-strip-trailing-whitespace-from-all-lines-in-a-file
@@ -83,6 +90,11 @@ fun! TrimWhitespace()
     call winrestview(l:save)
 endfun
 
+fun! CargoBuild()
+    execute "Cargo build " . g:cpu_count
+endfun
+
+command! CargoBuild call CargoBuild()
 command! TrimWhitespace call TrimWhitespace()
 " space is my leader key
 let mapleader=' '
@@ -107,7 +119,7 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <leader>dw :TrimWhitespace<cr>
 
 nnoremap <F7> :Dispatch!<CR>
-nnoremap <F6> :Cargo build<CR>
+nnoremap <F6> :CargoBuild<CR>
 
 
 " Opens a new terminal in a newtab
