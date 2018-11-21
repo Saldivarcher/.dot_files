@@ -65,8 +65,6 @@ set whichwrap+=<,>,h,l
 set showmatch
 set mat=2
 
-set termguicolors
-
 " Lowers brightness on matching brackets
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
@@ -146,25 +144,6 @@ nmap <F8>  :TagbarToggle<CR>
 let NERDTreeQuitOnOpen=1
 let NERDTreeIgnore =['\.pyc$', '\.o$', '\.a$', '\.cbor$']
 let NERDTreeMinimalUI = 1
-
-"NERDTrees File highlighting
-function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
- exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
- exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-endfunction
-
-call NERDTreeHighlightFile('rs', 'green', 'none', 'green', '#151515')
-call NERDTreeHighlightFile('c', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('cpp', 'blue', 'none', '#3366FF', '#151515')
-call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('bp', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('go', 'cyan', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('h', 'Magenta', 'none', 'red', '#151515')
-call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
-call NERDTreeHighlightFile('toml', 'Magenta', 'none', '#ff00ff', '#151515')
 
 set switchbuf+=newtab
 
