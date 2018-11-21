@@ -46,3 +46,5 @@ if (( $+commands[xclip] )) ; then
     alias getclip="xclip -selection c -o"
 fi
 
+source "$HOME/.vim/plugged/gruvbox/gruvbox_256palette.sh"
+

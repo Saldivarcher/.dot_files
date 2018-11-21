@@ -3,6 +3,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'airblade/vim-gitgutter'
 Plug 'Valloric/YouCompleteMe'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'jremmen/vim-ripgrep'
 Plug 'raimondi/delimitmate'
 Plug 'justinmk/vim-syntax-extra'
@@ -18,6 +19,8 @@ Plug 'rust-lang/rust.vim'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-dispatch'
+Plug 'morhetz/gruvbox'
+Plug 'neutaaaaan/iosvkem'
 call plug#end()
 
 set background=dark
@@ -26,7 +29,9 @@ set nocompatible
 
 set encoding=UTF-8
 
-colorscheme Iosvkem
+colorscheme gruvbox
+let g:gruvbox_contrast_dark="hard"
+let g:airline_theme='gruvbox'
 
 syntax on
 set number
@@ -59,6 +64,8 @@ set noswapfile
 set whichwrap+=<,>,h,l
 set showmatch
 set mat=2
+
+set termguicolors
 
 " Lowers brightness on matching brackets
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
