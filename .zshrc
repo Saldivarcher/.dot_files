@@ -41,3 +41,8 @@ alias back="cd -"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+if (( $+commands[xclip] )) ; then
+    alias xclip="xclip -selection c"
+    alias getclip="xclip -selection c -o"
+fi
+
