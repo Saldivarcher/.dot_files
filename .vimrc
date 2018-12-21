@@ -78,8 +78,14 @@ let g:ycm_confirm_extra_conf = 0
 " Vim-sneak
 let g:sneak#label = 1
 
+" Removes whitespace and newlines from strings
+function! Chomp(string)
+    return substitute(a:string, '\n\+$', '', '')
+endfunction
+
 if filereadable('/proc/cpuinfo')
-    let n = system('grep -c ^processor /proc/cpuinfo')
+    " Remove newline from the end of the string
+    let n = Chomp(system('grep -c ^processor /proc/cpuinfo'))
     let cpu_count = (n > 1 ? ('-j'.(n)): '')
 else
     let cpu_count = ''
@@ -99,7 +105,12 @@ fun! CargoBuild()
     execute "Cargo build " . g:cpu_count
 endfun
 
+fun! CargoBuildRelease()
+    execute "Cargo build --release " . g:cpu_count
+endfun
+
 command! CargoBuild call CargoBuild()
+command! CargoBuildRelease call CargoBuildRelease()
 command! TrimWhitespace call TrimWhitespace()
 " space is my leader key
 let mapleader=' '
@@ -116,6 +127,10 @@ nnoremap <leader>rr :FZF<CR>
 nnoremap <leader>bs :set scrollback=1<CR>
 nnoremap <leader>bd :set scrollback=100000<CR>
 
+" Opens a new terminal in a newtab
+nnoremap <leader>tt :tabnew<CR>:terminal<CR>
+nnoremap <leader>ot :terminal<CR>
+
 " close a quickfix window
 nnoremap <leader>cw :ccl<CR>
 
@@ -123,27 +138,26 @@ nnoremap <leader>cw :ccl<CR>
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>dw :TrimWhitespace<cr>
 
-nnoremap <F7> :Dispatch!<CR>
 nnoremap <F6> :CargoBuild<CR>
-
-
-" Opens a new terminal in a newtab
-nnoremap <leader>tt :tabnew<CR>:terminal<CR>
-nnoremap <leader>ot :terminal<CR>
+nnoremap <F7> :Dispatch!<CR>
+nnoremap <F8> :TagbarToggle<CR>
+nnoremap <F9> :CargoBuildRelease<CR>
 
 " Use Esc to exit terminal-mode
 tnoremap <Esc> <C-\><C-n>
 
-
 " Maps 'ctrl-n' to open nerdtree
 map  <C-n> :NERDTreeToggle<CR>
 map  <C-o> :NERDTreeFind<CR>
-nmap <F8>  :TagbarToggle<CR>
 
 " NERD Tree options
 let NERDTreeQuitOnOpen=1
 let NERDTreeIgnore =['\.pyc$', '\.o$', '\.a$', '\.cbor$']
 let NERDTreeMinimalUI = 1
+
+" Sets spellcheck for git commit messages and markdown files
+autocmd FileType gitcommit setlocal spell
+autocmd FileType markdown  setlocal spell
 
 set switchbuf+=newtab
 

@@ -1,8 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/bin
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.rustup/toolchains/nightly-2018-10-18-x86_64-unknown-linux-gnu/lib:$HOME/.rustup/toolchains/nightly-2018-10-18-x86_64-unknown-linux-gnu/lib/rustlib/x86_64-unknown-linux-gnu/lib
-
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -45,3 +43,5 @@ if (( $+commands[xclip] )) ; then
     alias xclip="xclip -selection c"
     alias getclip="xclip -selection c -o"
 fi
+
+fpath+=~/.dot_files/.zfunc
