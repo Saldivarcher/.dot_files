@@ -21,6 +21,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-dispatch'
 Plug 'morhetz/gruvbox'
 Plug 'neutaaaaan/iosvkem'
+Plug 'HendrikPetertje/vimify'
+"<Leader>ig is the command to get indent coloring
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Shougo/vinarise'
 call plug#end()
 
 set background=dark
@@ -40,8 +44,8 @@ set ruler
 filetype plugin indent on
 
 set tabstop=4
-set expandtab
 set shiftwidth=4
+set expandtab
 
 set autoindent
 set cindent
@@ -160,6 +164,11 @@ autocmd FileType gitcommit setlocal spell
 autocmd FileType markdown  setlocal spell
 
 set switchbuf+=newtab
+
+let g:spotify_token=''
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
+let g:indent_guides_color_change_percent=0
 
 " Rename tabs to show tab number.
 " (Based on http://stackoverflow.com/questions/5927952/whats-implementation-of-vims-default-tabline-function)
