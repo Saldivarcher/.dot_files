@@ -1,7 +1,7 @@
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'airblade/vim-gitgutter'
-Plug 'Valloric/YouCompleteMe'
+"Plug 'Valloric/YouCompleteMe'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jremmen/vim-ripgrep'
@@ -9,7 +9,8 @@ Plug 'raimondi/delimitmate'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'justinmk/vim-sneak'
 if has('unix')
-    Plug '~/.fzf'
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf.vim'
 endif
 if has('macunix')
     Plug '/usr/local/opt/fzf'
@@ -25,6 +26,18 @@ Plug 'HendrikPetertje/vimify'
 "<Leader>ig is the command to get indent coloring
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Shougo/vinarise'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Deoplete source for Rust
+Plug 'racer-rust/vim-racer'
+" Deoplete source for vim
+Plug 'Shougo/neco-vim'
+" Deoplete source for Python
+Plug 'zchee/deoplete-jedi'
+Plug 'Shougo/echodoc.vim'
 call plug#end()
 
 set background=dark
@@ -69,18 +82,34 @@ set whichwrap+=<,>,h,l
 set showmatch
 set mat=2
 
+set switchbuf+=newtab
+
 " Lowers brightness on matching brackets
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 " YouCompleteMe options
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_show_diagnostics_ui = 0
-let g:ycm_goto_buffer_command = 'new-tab'
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_confirm_extra_conf = 0
+"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+"let g:ycm_show_diagnostics_ui = 0
+"let g:ycm_goto_buffer_command = 'new-tab'
+"let g:ycm_autoclose_preview_window_after_insertion = 1
+"let g:ycm_confirm_extra_conf = 0
+set hidden
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#source('LanguageClient',
+            \ 'min_pattern_length',
+            \ 2)
+
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rls'],
+    \ 'python': ['pyls'],
+    \ }
 
 " Vim-sneak
 let g:sneak#label = 1
+
+set cmdheight=2
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = 'signature'
 
 " Removes whitespace and newlines from strings
 function! Chomp(string)
@@ -118,10 +147,32 @@ command! CargoBuildRelease call CargoBuildRelease()
 command! TrimWhitespace call TrimWhitespace()
 " space is my leader key
 let mapleader=' '
-nnoremap <leader>gt :YcmCompleter GoTo<CR>
-nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gi :YcmCompleter GoToInclude<CR>
+"nnoremap <leader>gt :YcmCompleter GoTo<CR>
+"nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
+"nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+"nnoremap <leader>gi :YcmCompleter GoToInclude<CR>
+
+function SetLSPShortcuts()
+  nnoremap <leader>gd :call LanguageClient#textDocument_definition({'gotoCmd': 'split'})<CR>
+  nnoremap <leader>gt :call LanguageClient#textDocument_typeDefinition()<CR>
+  nnoremap <leader>gs :call LanguageClient_textDocument_documentSymbol()<CR>
+  nnoremap <leader>gi :call LanguageClient_textDocument_implementation()<CR>
+  nnoremap <leader>gc :call LanguageClient#textDocument_completion()<CR>
+  nnoremap <leader>gh :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <leader>om :call LanguageClient_contextMenu()<CR>
+  nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
+  nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
+  nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
+  nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
+endfunction()
+
+augroup LSP
+  autocmd!
+  autocmd FileType cpp,c,rust,python,vim call SetLSPShortcuts()
+augroup END
+
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
 nnoremap <leader>nt :tabnew<CR>
 nnoremap <leader>bt :-tabnew<CR>
 nnoremap <leader>hh :tabprevious<CR>
@@ -163,9 +214,8 @@ let NERDTreeMinimalUI = 1
 autocmd FileType gitcommit setlocal spell
 autocmd FileType markdown  setlocal spell
 
-set switchbuf+=newtab
 
-let g:spotify_token=''
+let g:spotify_token='MzUwYTQ3OGM1OGYwNGVlNmE0MDI2ODZiYTE3NDBjZTg6ZTMzYjAyODA2MjBhNGZlNWJlOTRiNmFhYThhNzlmOTM'
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
 let g:indent_guides_color_change_percent=0
