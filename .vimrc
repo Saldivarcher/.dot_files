@@ -95,6 +95,8 @@ hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 "let g:ycm_confirm_extra_conf = 0
 set hidden
 let g:deoplete#enable_at_startup = 1
+
+
 call deoplete#custom#source('LanguageClient',
             \ 'min_pattern_length',
             \ 2)
@@ -102,7 +104,14 @@ call deoplete#custom#source('LanguageClient',
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rls'],
     \ 'python': ['pyls'],
+    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
     \ }
+
+let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+let g:LanguageClient_settingsPath = $HOME . '/.dot_files/settings.json'
+" https://github.com/autozimu/LanguageClient-neovim/issues/379 LSP snippet is not supported
+let g:LanguageClient_hasSnippetSupport = 0
 
 " Vim-sneak
 let g:sneak#label = 1
@@ -153,7 +162,7 @@ let mapleader=' '
 "nnoremap <leader>gi :YcmCompleter GoToInclude<CR>
 
 function SetLSPShortcuts()
-  nnoremap <leader>gd :call LanguageClient#textDocument_definition({'gotoCmd': 'split'})<CR>
+  nnoremap <leader>gd :call LanguageClient#textDocument_definition({'gotoCmd': 'tabnew'})<CR>
   nnoremap <leader>gt :call LanguageClient#textDocument_typeDefinition()<CR>
   nnoremap <leader>gs :call LanguageClient_textDocument_documentSymbol()<CR>
   nnoremap <leader>gi :call LanguageClient_textDocument_implementation()<CR>
