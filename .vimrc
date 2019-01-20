@@ -112,6 +112,10 @@ let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if yo
 let g:LanguageClient_settingsPath = $HOME . '/.dot_files/settings.json'
 " https://github.com/autozimu/LanguageClient-neovim/issues/379 LSP snippet is not supported
 let g:LanguageClient_hasSnippetSupport = 0
+let g:LanguageClient_hoverPreview = "Never"
+
+" Turn off diagnostics
+let g:LanguageClient_diagnosticsEnable = 0
 
 " Vim-sneak
 let g:sneak#label = 1
@@ -187,6 +191,7 @@ nnoremap <leader>bt :-tabnew<CR>
 nnoremap <leader>hh :tabprevious<CR>
 nnoremap <leader>ll :tabnext<CR>
 nnoremap <leader>vs :vsplit<CR>
+nnoremap <leader>cp <C-w><C-z><CR>
 nnoremap <leader>rr :FZF<CR>
 nnoremap <leader>bs :set scrollback=1<CR>
 nnoremap <leader>bd :set scrollback=100000<CR>
