@@ -191,7 +191,7 @@ nnoremap <leader>bt :-tabnew<CR>
 nnoremap <leader>hh :tabprevious<CR>
 nnoremap <leader>ll :tabnext<CR>
 nnoremap <leader>vs :vsplit<CR>
-nnoremap <leader>cp <C-w><C-z><CR>
+nnoremap <leader>cp :pc<CR>
 nnoremap <leader>rr :FZF<CR>
 nnoremap <leader>bs :set scrollback=1<CR>
 nnoremap <leader>bd :set scrollback=100000<CR>
