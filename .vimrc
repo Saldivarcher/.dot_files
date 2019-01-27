@@ -1,7 +1,6 @@
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'airblade/vim-gitgutter'
-"Plug 'Valloric/YouCompleteMe'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'jremmen/vim-ripgrep'
@@ -87,12 +86,6 @@ set switchbuf+=newtab
 " Lowers brightness on matching brackets
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
-" YouCompleteMe options
-"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-"let g:ycm_show_diagnostics_ui = 0
-"let g:ycm_goto_buffer_command = 'new-tab'
-"let g:ycm_autoclose_preview_window_after_insertion = 1
-"let g:ycm_confirm_extra_conf = 0
 set hidden
 let g:deoplete#enable_at_startup = 1
 
@@ -160,10 +153,6 @@ command! CargoBuildRelease call CargoBuildRelease()
 command! TrimWhitespace call TrimWhitespace()
 " space is my leader key
 let mapleader=' '
-"nnoremap <leader>gt :YcmCompleter GoTo<CR>
-"nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
-"nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
-"nnoremap <leader>gi :YcmCompleter GoToInclude<CR>
 
 function SetLSPShortcuts()
   nnoremap <leader>gd :call LanguageClient#textDocument_definition({'gotoCmd': 'tabnew'})<CR>
@@ -195,6 +184,8 @@ nnoremap <leader>cp :pc<CR>
 nnoremap <leader>rr :FZF<CR>
 nnoremap <leader>bs :set scrollback=1<CR>
 nnoremap <leader>bd :set scrollback=100000<CR>
+" Go back to previous open file
+nnoremap <leader>gb :e#<CR>
 
 " Opens a new terminal in a newtab
 nnoremap <leader>tt :tabnew<CR>:terminal<CR>
