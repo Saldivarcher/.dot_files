@@ -184,6 +184,8 @@ nnoremap <leader>cp :pc<CR>
 nnoremap <leader>rr :FZF<CR>
 nnoremap <leader>bs :set scrollback=1<CR>
 nnoremap <leader>bd :set scrollback=100000<CR>
+nnoremap <leader>ob :Vinarise<CR>
+nnoremap <leader>po :VinarisePluginDump<CR>
 " Go back to previous open file
 nnoremap <leader>gb :e#<CR>
 
