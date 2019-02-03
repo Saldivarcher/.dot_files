@@ -3,6 +3,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/bin:$HOME/.loc
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+export EDITOR=nvim
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -21,6 +22,7 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# Need to stop opening vim in an emulator!
 if env | grep -q vim; then
     cmd="echo \"you're in vim!\""
     alias vim="$cmd"
