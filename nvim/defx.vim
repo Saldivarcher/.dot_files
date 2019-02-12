@@ -25,7 +25,7 @@ function! s:defx_open(...) abort
     return
   endif
 
-  let l:args = '-winwidth=40 -direction=topleft'
+  let l:args = '-show-ignored-files -winwidth=40 -direction=topleft'
   let l:is_opened = bufwinnr('defx') > 0
 
   if has_key(l:opts, 'split')
@@ -61,6 +61,7 @@ function! s:defx_mappings() abort
   nnoremap <silent><buffer><expr> <CR> defx#do_action('drop')
   nnoremap <silent><buffer><expr> <2-LeftMouse> defx#do_action('drop')
   nnoremap <silent><buffer><expr> s defx#do_action('open', 'botright vsplit')
+  nnoremap <silent><buffer><expr> t defx#do_action('open', 'tabnew')
   nnoremap <silent><buffer><expr> R defx#do_action('redraw')
   nnoremap <silent><buffer><expr> u defx#do_action('cd', ['..'])
   nnoremap <silent><buffer><expr> cd defx#do_action('change_vim_cwd')
