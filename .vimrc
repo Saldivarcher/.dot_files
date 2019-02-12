@@ -1,5 +1,7 @@
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'kristijanhusak/defx-git',
+Plug 'kristijanhusak/defx-icons',
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -60,8 +62,8 @@ set shiftwidth=4
 set expandtab
 
 set autoindent
-set cindent
 set smarttab
+set cindent
 
 set wrap
 set textwidth=79
@@ -208,19 +210,9 @@ nnoremap <F9> :CargoBuildRelease<CR>
 " Use Esc to exit terminal-mode
 tnoremap <Esc> <C-\><C-n>
 
-" Maps 'ctrl-n' to open nerdtree
-map  <C-n> :NERDTreeToggle<CR>
-map  <C-o> :NERDTreeFind<CR>
-
-" NERD Tree options
-let NERDTreeQuitOnOpen=1
-let NERDTreeIgnore =['\.pyc$', '\.o$', '\.a$', '\.cbor$']
-let NERDTreeMinimalUI = 1
-
 " Sets spellcheck for git commit messages and markdown files
 autocmd FileType gitcommit setlocal spell
 autocmd FileType markdown  setlocal spell
-
 
 let g:spotify_token='MzUwYTQ3OGM1OGYwNGVlNmE0MDI2ODZiYTE3NDBjZTg6ZTMzYjAyODA2MjBhNGZlNWJlOTRiNmFhYThhNzlmOTM'
 let g:indent_guides_start_level=2
@@ -272,6 +264,19 @@ if exists("+showtabline")
     set showtabline=1
     highlight link TabNum Special
 endif
+
+" If in insert mode, help cannot be called
+inoremap <F1> <Esc>
+noremap <F1> :call MapF1()<CR>
+
+" Close help with f1 if open
+function! MapF1()
+  if &buftype == "help"
+    exec 'quit'
+  else
+    exec 'help'
+  endif
+endfunction
 
 " This is the default extra key bindings
 let g:fzf_action = {

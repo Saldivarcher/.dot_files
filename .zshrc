@@ -22,7 +22,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # Need to stop opening vim in an emulator!
-if env | grep -q vim; then
+if env | grep -q VIMRUNTIME; then
     cmd="echo \"you're in vim!\""
     alias vim="$cmd"
     alias nvim="$cmd"
