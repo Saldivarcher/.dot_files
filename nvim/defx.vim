@@ -18,13 +18,7 @@ function! s:setup_defx() abort
         \ 'columns': 'git:icons:filename:size:time',
         \ })
 
-  if !filereadable(expand('<afile>'))
-      " TODO: Figure out a way to to have defx open a directory
-      return
-  else
-    call s:defx_open({'dir': expand('<afile>')})
-  endif
-
+  call s:defx_open({'dir': expand('<afile>')})
 endfunction
 
 function! s:defx_open(...) abort
