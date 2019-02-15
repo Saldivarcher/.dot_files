@@ -1,6 +1,6 @@
 augroup vimrc_defx
   autocmd!
-  autocmd FileType defx call s:defx_mappings()                                  "Defx mappings
+  autocmd FileType defx call s:defx_mappings()
   autocmd VimEnter * call s:setup_defx()
   autocmd VimEnter * call fugitive#detect(expand('<afile>'))
 augroup END
@@ -14,7 +14,17 @@ function! s:setup_defx() abort
         \ 'max_width': 80,
         \ })
 
-  call s:defx_open({ 'dir': expand('<afile>') })
+  call defx#custom#option('_', {
+        \ 'columns': 'git:icons:filename:size:time',
+        \ })
+
+  if !filereadable(expand('<afile>'))
+      " TODO: Figure out a way to to have defx open a directory
+      return
+  else
+    call s:defx_open({'dir': expand('<afile>')})
+  endif
+
 endfunction
 
 function! s:defx_open(...) abort
