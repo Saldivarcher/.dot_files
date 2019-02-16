@@ -14,8 +14,14 @@ function! s:setup_defx() abort
         \ 'max_width': 80,
         \ })
 
+  call defx#custom#column('mark', {
+        \ 'directory_icon': '▸',
+        \ 'readonly_icon': '✗',
+        \ 'selected_icon': '✓',
+        \ })
+
   call defx#custom#option('_', {
-        \ 'columns': 'git:icons:filename:size:time',
+        \ 'columns': 'mark:filename:type:size:time',
         \ })
 
   call s:defx_open({'dir': expand('<afile>')})
@@ -29,11 +35,11 @@ function! s:defx_open(...) abort
     return
   endif
 
-  let l:args = '-show-ignored-files -winwidth=40 -direction=topleft'
+  let l:args = '-show-ignored-files'
   let l:is_opened = bufwinnr('defx') > 0
 
   if has_key(l:opts, 'split')
-    let l:args .= ' -split=vertical'
+    let l:args .= ' -split=vertical -winwidth=40 -direction=topleft'
   endif
 
   if has_key(l:opts, 'find_current_file')
@@ -48,6 +54,7 @@ function! s:defx_open(...) abort
     endif
   endif
 
+  " Execute commands that have been printed like above
   return execute("norm!\<C-w>=")
 endfunction
 
