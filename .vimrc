@@ -277,5 +277,7 @@ function! MapF1()
   endif
 endfunction
 
+set guicursor=n-v-c-sm:block,i-ci-ve:ver25-Cursor,r-cr-o:hor20
+
 source  ~/.dot_files/nvim/fzf.vim
 source  ~/.dot_files/nvim/defx.vim

@@ -1,0 +1,12 @@
+# Use UTF-8 to show cool arrows that do not look like crap :)
+e scr.utf8 = true
+
+# Graph options
+#
+# Show bytes in graph view
+e graph.offset = true
+
+# Comments to the right of the instruction
+e graph.cmtright = true
+
+eco solarized
