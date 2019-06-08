@@ -46,7 +46,7 @@ function! s:defx_open(...) abort
     if &filetype ==? 'defx'
       return
     endif
-    call execute(printf('Defx %s -search=%s %s', l:args, expand('%:p'), expand('%:p:h')))
+    call execute(printf('Defx -toggle %s -search=%s %s', l:args, expand('%:p'), expand('%:p:h')))
   else
     call execute(printf('Defx -toggle %s %s', l:args, l:path))
     if l:is_opened
@@ -83,6 +83,7 @@ function! s:defx_mappings() abort
   nnoremap <silent><buffer><expr> yy defx#do_action('yank_path')
   nnoremap <silent><buffer><expr> q defx#do_action('quit')
   nnoremap <silent><buffer><expr> gh defx#do_action('cd', [getcwd()])
+  nnoremap <silent><buffer><expr> n defx#do_action('quit')
 endfunction
 
 

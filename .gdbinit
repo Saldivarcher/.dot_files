@@ -15,35 +15,35 @@ set tui border-mode normal
 set tui active-border-mode bold
 
 define lsb
- info breakpoints
+  info breakpoints
 end
 
 define argv
- show args
+  show args
 end
 
 define frame
- info frame
- info args
- info locals
+  info frame
+  info args
+  info locals
 end
 
 define func
- info functions
+  info functions
 end
 
 define var
- info variables
+  info variables
 end
 
 define lib
- info sharedlibrary
+  info sharedlibrary
 end
 
 define sig
- info signals
+  info signals
 end
 
 define thread
- info threads
+  info threads
 end

@@ -7,7 +7,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="fishy"
+ZSH_THEME="modified-clean"
 
 plugins=(
   git
@@ -15,7 +15,6 @@ plugins=(
   zsh-syntax-highlighting
   cargo
   rust
-  tmux
   colored-man-pages
 )
 
@@ -38,6 +37,9 @@ alias rust-gdb="rust-gdb -q"
 # If you accidentally leave a directory you can go back with this
 alias back="cd -"
 
+# tmux can become wonky at times after an ssh session
+alias reset-display="export DISPLAY=:0.0"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if (( $+commands[xclip] )) ; then
@@ -47,7 +49,14 @@ fi
 
 # Caps-Lock to control using "setxkbmap"
 if (($+commands[setxkbmap])) ; then
+    if env | grep -q DISPLAY; then
+        setxkbmap -option caps:ctrl_modifier
+    fi
     alias set-ctrl="setxkbmap -option caps:ctrl_modifier"
+fi
+
+if (($+commands[pacmd])) ; then
+    alias set-headphones='pacmd set-default-sink "alsa_output.usb-SteelSeries_SteelSeries_Arctis_7-00.analog-mono"'
 fi
 
 fpath+=~/.dot_files/.zfunc

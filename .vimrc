@@ -20,7 +20,7 @@ Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-sleuth'
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 Plug 'neutaaaaan/iosvkem'
 Plug 'HendrikPetertje/vimify'
 "<Leader>ig is the command to get indent coloring
@@ -54,16 +54,17 @@ syntax on
 set number
 set ruler
 
-filetype plugin indent on
+"""
+"filetype plugin indent on
 
-set tabstop=4
-set shiftwidth=4
-set expandtab
+"set tabstop=4
+"set shiftwidth=4
+"set expandtab
 
-set autoindent
-set smarttab
-set cindent
-
+"set autoindent
+"set smarttab
+"set cindent
+"""
 set wrap
 set textwidth=79
 
@@ -89,7 +90,6 @@ hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 set hidden
 let g:deoplete#enable_at_startup = 1
-
 
 call deoplete#custom#source('LanguageClient',
             \ 'min_pattern_length',
@@ -276,8 +276,6 @@ function! MapF1()
     exec 'help'
   endif
 endfunction
-
-set guicursor=n-v-c-sm:block,i-ci-ve:ver25-Cursor,r-cr-o:hor20
 
 source  ~/.dot_files/nvim/fzf.vim
 source  ~/.dot_files/nvim/defx.vim

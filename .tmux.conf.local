@@ -291,3 +291,4 @@ unbind C-a
 # set -g status-position top
 
 bind u set -g status
+set -g repeat-time 0
