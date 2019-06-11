@@ -1,8 +1,7 @@
 call plug#begin('~/.vim/plugged')
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'airblade/vim-gitgutter'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'jremmen/vim-ripgrep'
 Plug 'raimondi/delimitmate'
 Plug 'justinmk/vim-syntax-extra'
@@ -26,18 +25,8 @@ Plug 'HendrikPetertje/vimify'
 "<Leader>ig is the command to get indent coloring
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Shougo/vinarise'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Deoplete source for Rust
-Plug 'racer-rust/vim-racer'
-" Deoplete source for vim
-Plug 'Shougo/neco-vim'
-" Deoplete source for Python
-Plug 'zchee/deoplete-jedi'
 Plug 'Shougo/echodoc.vim'
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 call plug#end()
 
 set background=dark
@@ -48,7 +37,6 @@ set encoding=UTF-8
 
 colorscheme gruvbox
 let g:gruvbox_contrast_dark="hard"
-let g:airline_theme='gruvbox'
 
 syntax on
 set number
@@ -70,6 +58,7 @@ set textwidth=79
 
 set mouse=a
 set ffs=unix,dos,mac
+set updatetime=300
 
 filetype plugin on
 filetype indent on
@@ -80,41 +69,22 @@ set nowb
 set noswapfile
 
 set whichwrap+=<,>,h,l
+" Highlight matching bracket
 set showmatch
 set mat=2
+set hidden
+" Make vim command bar a bit bigger
+set cmdheight=2
 
-set switchbuf+=newtab
+" Blinking cursor, although doesn't have an effect on alacritty
+set guicursor=a:blinkon500-blinkwait500-blinkoff500
 
 " Lowers brightness on matching brackets
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
-set hidden
-let g:deoplete#enable_at_startup = 1
-
-call deoplete#custom#source('LanguageClient',
-            \ 'min_pattern_length',
-            \ 2)
-
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rls'],
-    \ 'python': ['pyls'],
-    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
-    \ }
-
-let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
-let g:LanguageClient_settingsPath = $HOME . '/.dot_files/settings.json'
-" https://github.com/autozimu/LanguageClient-neovim/issues/379 LSP snippet is not supported
-let g:LanguageClient_hasSnippetSupport = 0
-let g:LanguageClient_hoverPreview = "Never"
-
-" Turn off diagnostics
-let g:LanguageClient_diagnosticsEnable = 0
-
 " Vim-sneak
 let g:sneak#label = 1
 
-set cmdheight=2
 let g:echodoc#enable_at_startup = 1
 let g:echodoc#type = 'signature'
 
@@ -154,27 +124,6 @@ command! CargoBuildRelease call CargoBuildRelease()
 command! TrimWhitespace call TrimWhitespace()
 " space is my leader key
 let mapleader=' '
-
-function SetLSPShortcuts()
-  nnoremap <leader>gd :call LanguageClient#textDocument_definition({'gotoCmd': 'tabnew'})<CR>
-  nnoremap <leader>gt :call LanguageClient#textDocument_typeDefinition()<CR>
-  nnoremap <leader>gs :call LanguageClient_textDocument_documentSymbol()<CR>
-  nnoremap <leader>gi :call LanguageClient_textDocument_implementation()<CR>
-  nnoremap <leader>gc :call LanguageClient#textDocument_completion()<CR>
-  nnoremap <leader>gh :call LanguageClient#textDocument_hover()<CR>
-  nnoremap <leader>om :call LanguageClient_contextMenu()<CR>
-  nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
-  nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
-  nnoremap <leader>lx :call LanguageClient#textDocument_references()<CR>
-  nnoremap <leader>la :call LanguageClient_workspace_applyEdit()<CR>
-endfunction()
-
-augroup LSP
-  autocmd!
-  autocmd FileType cpp,c,rust,python,vim call SetLSPShortcuts()
-augroup END
-
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 nnoremap <leader>nt :tabnew<CR>
 nnoremap <leader>bt :-tabnew<CR>
@@ -221,47 +170,47 @@ let g:indent_guides_color_change_percent=0
 " Rename tabs to show tab number.
 " (Based on http://stackoverflow.com/questions/5927952/whats-implementation-of-vims-default-tabline-function)
 if exists("+showtabline")
-    function! MyTabLine()
-        let s = ''
-        let wn = ''
-        let t = tabpagenr()
-        let i = 1
-        while i <= tabpagenr('$')
-            let buflist = tabpagebuflist(i)
-            let winnr = tabpagewinnr(i)
-            let s .= '%' . i . 'T'
-            let s .= (i == t ? '%1*' : '%2*')
-            let s .= ' '
-            let wn = tabpagewinnr(i,'$')
+  function! MyTabLine()
+    let s = ''
+    let wn = ''
+    let t = tabpagenr()
+    let i = 1
+    while i <= tabpagenr('$')
+      let buflist = tabpagebuflist(i)
+      let winnr = tabpagewinnr(i)
+      let s .= '%' . i . 'T'
+      let s .= (i == t ? '%1*' : '%2*')
+      let s .= ' '
+      let wn = tabpagewinnr(i,'$')
 
-            let s .= '%#TabNum#'
-            let s .= i
-            " let s .= '%*'
-            let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-            let bufnr = buflist[winnr - 1]
-            let file = bufname(bufnr)
-            let buftype = getbufvar(bufnr, 'buftype')
-            if buftype == 'nofile'
-                if file =~ '\/.'
-                    let file = substitute(file, '.*\/\ze.', '', '')
-                endif
-            else
-                let file = fnamemodify(file, ':p:t')
-            endif
-            if file == ''
-                let file = '[No Name]'
-            endif
-            let s .= ' ' . file . ' '
-            let i = i + 1
-        endwhile
-        let s .= '%T%#TabLineFill#%='
-        let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-        return s
-    endfunction
-    set stal=2
-    set tabline=%!MyTabLine()
-    set showtabline=1
-    highlight link TabNum Special
+      let s .= '%#TabNum#'
+      let s .= i
+      " let s .= '%*'
+      let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
+      let bufnr = buflist[winnr - 1]
+      let file = bufname(bufnr)
+      let buftype = getbufvar(bufnr, 'buftype')
+      if buftype == 'nofile'
+        if file =~ '\/.'
+          let file = substitute(file, '.*\/\ze.', '', '')
+        endif
+      else
+        let file = fnamemodify(file, ':p:t')
+      endif
+      if file == ''
+        let file = '[No Name]'
+      endif
+      let s .= ' ' . file . ' '
+      let i = i + 1
+    endwhile
+    let s .= '%T%#TabLineFill#%='
+    let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+    return s
+  endfunction
+  set stal=2
+  set tabline=%!MyTabLine()
+  set showtabline=1
+  highlight link TabNum Special
 endif
 
 " If in insert mode, help cannot be called
@@ -279,3 +228,5 @@ endfunction
 
 source  ~/.dot_files/nvim/fzf.vim
 source  ~/.dot_files/nvim/defx.vim
+source  ~/.dot_files/nvim/autocomplete.vim
+source  ~/.dot_files/nvim/lightline.vim
