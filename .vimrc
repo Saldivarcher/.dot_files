@@ -15,7 +15,7 @@ if has('macunix')
 endif
 Plug 'junegunn/fzf.vim'
 Plug 'rust-lang/rust.vim'
-Plug 'majutsushi/tagbar'
+Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-sleuth'
@@ -152,7 +152,7 @@ nnoremap <leader>dw :TrimWhitespace<cr>
 
 nnoremap <F6> :CargoBuild<CR>
 nnoremap <F7> :Dispatch!<CR>
-nnoremap <F8> :TagbarToggle<CR>
+nnoremap <F8> :Vista!!<CR>
 nnoremap <F9> :CargoBuildRelease<CR>
 
 " Use Esc to exit terminal-mode
@@ -161,6 +161,31 @@ tnoremap <Esc> <C-\><C-n>
 " Sets spellcheck for git commit messages and markdown files
 autocmd FileType gitcommit setlocal spell
 autocmd FileType markdown  setlocal spell
+
+let g:vista_default_executive = 'coc'
+" Size of code box within fzf search window
+let g:vista_fzf_preview = ['right:50%']
+" Add items coc doesn't work for here
+let g:vista_executive_for = {
+  \ 'vim': 'ctags',
+  \ }
+let g:vista_close_on_jump = 1
+let g:vista_sidebar_width = 75
+
+let g:vista#renderer#enable_icon = 1
+
+" The default icons can't be suitable for all the filetypes, you can extend it as you wish.
+let g:vista#renderer#icons = {
+\   "function":      "\u2a10",
+\   "variable":      "\u0056",
+\   "enum":          "\u00e8",
+\   "method":        "\u006d",
+\   "module":        "\u2133",
+\   "type":          "\u0054",
+\   "typeParameter": "\u0054",
+\   "typedef":       "\u0054",
+\   "types":         "\u0054",
+\  }
 
 let g:spotify_token='MzUwYTQ3OGM1OGYwNGVlNmE0MDI2ODZiYTE3NDBjZTg6ZTMzYjAyODA2MjBhNGZlNWJlOTRiNmFhYThhNzlmOTM'
 let g:indent_guides_start_level=2

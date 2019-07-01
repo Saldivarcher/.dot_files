@@ -31,10 +31,10 @@ function! SetLSPShortcuts()
   nmap <leader>lr <Plug>(coc-rename)
   nmap <leader>gh :call CocAction('doHover')<CR>
   " Workspace symbol search
-  nnoremap <silent><leader>ws :<C-u>CocList -I symbols<CR>
+  nnoremap <silent><leader>ws :<C-u>CocList --top -I symbols<CR>
   " Document only symbol search
   " TODO: Figure out how to use fzf for outlining and move it to the top
-  nnoremap <silent><leader>gs :<C-u>CocList outline<CR>
+  nnoremap <silent><leader>gs :<C-u>CocList --top outline<CR>
 endfunction()
 
 augroup LSP
