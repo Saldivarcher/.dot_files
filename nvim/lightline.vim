@@ -9,18 +9,13 @@ let g:lightline = {
     \ },
   \ 'component_expand': {
       \ 'git_status': 'GitStatusline',
-      \ 'indent': 'IndentInfo',
+      \ 'indent': 'SleuthIndicator',
       \ 'fileencode': 'FileEncoding',
     \ },
   \ 'component_function': {
       \ 'coc_status': 'coc#status',
     \ },
 \}
-
-function! IndentInfo() abort
-  let l:indent_type = &expandtab ? 'spaces' : 'tabs'
-  return l:indent_type.': '.&shiftwidth
-endfunction
 
 function! GitStatusline() abort
   let l:head = fugitive#head()

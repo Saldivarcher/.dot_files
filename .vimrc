@@ -42,17 +42,16 @@ syntax on
 set number
 set ruler
 
-"""
-"filetype plugin indent on
+if get(g:, '_has_set_default_indent_settings', 0) == 0
+  " Set the indenting level to 2 spaces for the following file types.
+  autocmd FileType typescript,javascript,jsx,tsx,css,html,ruby,elixir,kotlin,vim,plantuml
+        \ setlocal expandtab tabstop=2 shiftwidth=2
+  set expandtab
+  set tabstop=2
+  set shiftwidth=2
+  let g:_has_set_default_indent_settings = 1
+endif
 
-"set tabstop=4
-"set shiftwidth=4
-"set expandtab
-
-"set autoindent
-"set smarttab
-"set cindent
-"""
 set wrap
 set textwidth=79
 
@@ -103,6 +102,17 @@ endif
 
 autocmd FileType rust let b:dispatch = "cargo build " . cpu_count
 
+function! LightlineReload()
+  call lightline#init()
+  call lightline#colorscheme()
+  call lightline#update()
+endfunction
+
+function! ReloadSleuth()
+  Sleuth
+  call LightlineReload()
+endfunction
+
 " Removes whitespace from a file
 " https://vi.stackexchange.com/questions/454/whats-the-simplest-way-to-strip-trailing-whitespace-from-all-lines-in-a-file
 fun! TrimWhitespace()
@@ -122,6 +132,7 @@ endfun
 command! CargoBuild call CargoBuild()
 command! CargoBuildRelease call CargoBuildRelease()
 command! TrimWhitespace call TrimWhitespace()
+command! ReloadSleuth call ReloadSleuth()
 " space is my leader key
 let mapleader=' '
 
@@ -136,6 +147,7 @@ nnoremap <leader>bs :set scrollback=1<CR>
 nnoremap <leader>bd :set scrollback=100000<CR>
 nnoremap <leader>ob :Vinarise<CR>
 nnoremap <leader>po :VinarisePluginDump<CR>
+nnoremap <leader>cs :ReloadSleuth<CR>
 " Go back to previous open file
 nnoremap <leader>gb :e#<CR>
 
@@ -168,6 +180,7 @@ let g:vista_fzf_preview = ['right:50%']
 " Add items coc doesn't work for here
 let g:vista_executive_for = {
   \ 'vim': 'ctags',
+  \ 'make': 'ctags',
   \ }
 let g:vista_close_on_jump = 1
 let g:vista_sidebar_width = 75
