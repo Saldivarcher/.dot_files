@@ -3,7 +3,8 @@ let g:lightline = {
   \ 'active': {
       \ 'left': [
                  \ ['mode', 'paste'], ['git_status', 'coc_status'],
-                 \ ['readonly', 'relativepath', 'custom_modified']
+                 \ ['readonly', 'relativepath', 'custom_modified'],
+                 \ ['method']
                \ ],
       \ 'right': [['indent', 'percent', 'lineinfo'], ['filetype', 'fileencode']]
     \ },
@@ -14,6 +15,7 @@ let g:lightline = {
     \ },
   \ 'component_function': {
       \ 'coc_status': 'coc#status',
+      \ 'method': 'NearestMethodOrFunction',
     \ },
 \}
 
@@ -35,3 +37,15 @@ function! FileEncoding() abort
   endif
  return (&fenc!=#""?&fenc:&enc)
 endfunction
+
+function! NearestMethodOrFunction() abort
+  let l:method = get(b:, 'vista_nearest_method_or_function', '')
+  if l:method != ''
+    let l:method = '[' . l:method . ']'
+  else
+    let l:method = "[]"
+  endif
+  return l:method
+endfunction
+
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()

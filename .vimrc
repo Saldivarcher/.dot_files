@@ -7,11 +7,11 @@ Plug 'raimondi/delimitmate'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'justinmk/vim-sneak'
 if has('unix')
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'junegunn/fzf.vim'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
 endif
 if has('macunix')
-    Plug '/usr/local/opt/fzf'
+  Plug '/usr/local/opt/fzf'
 endif
 Plug 'junegunn/fzf.vim'
 Plug 'rust-lang/rust.vim'
@@ -46,9 +46,6 @@ if get(g:, '_has_set_default_indent_settings', 0) == 0
   " Set the indenting level to 2 spaces for the following file types.
   autocmd FileType typescript,javascript,jsx,tsx,css,html,ruby,elixir,kotlin,vim,plantuml
         \ setlocal expandtab tabstop=2 shiftwidth=2
-  set expandtab
-  set tabstop=2
-  set shiftwidth=2
   let g:_has_set_default_indent_settings = 1
 endif
 
@@ -76,7 +73,9 @@ set hidden
 set cmdheight=2
 
 " Blinking cursor, although doesn't have an effect on alacritty
-set guicursor=a:blinkon500-blinkwait500-blinkoff500
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+  \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+  \,sm:block-blinkwait175-blinkoff150-blinkon175
 
 " Lowers brightness on matching brackets
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
@@ -90,6 +89,18 @@ let g:echodoc#type = 'signature'
 " Removes whitespace and newlines from strings
 function! Chomp(string)
     return substitute(a:string, '\n\+$', '', '')
+endfunction
+
+function! ChangeToGnu()
+  "GNU Coding Standards
+  set cindent
+  set cinoptions=>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1
+  set expandtab
+  set shiftwidth=2
+  set tabstop=8
+  set softtabstop=2
+  set textwidth=80
+  set fo-=ro fo+=cql
 endfunction
 
 if filereadable('/proc/cpuinfo')
@@ -133,6 +144,7 @@ command! CargoBuild call CargoBuild()
 command! CargoBuildRelease call CargoBuildRelease()
 command! TrimWhitespace call TrimWhitespace()
 command! ReloadSleuth call ReloadSleuth()
+command! ChangeToGnu call ChangeToGnu()
 " space is my leader key
 let mapleader=' '
 
@@ -148,6 +160,7 @@ nnoremap <leader>bd :set scrollback=100000<CR>
 nnoremap <leader>ob :Vinarise<CR>
 nnoremap <leader>po :VinarisePluginDump<CR>
 nnoremap <leader>cs :ReloadSleuth<CR>
+nnoremap <leader>fs :Vista finder<CR>
 " Go back to previous open file
 nnoremap <leader>gb :e#<CR>
 
@@ -174,16 +187,12 @@ tnoremap <Esc> <C-\><C-n>
 autocmd FileType gitcommit setlocal spell
 autocmd FileType markdown  setlocal spell
 
-let g:vista_default_executive = 'coc'
+let g:vista_default_executive = 'ctags'
 " Size of code box within fzf search window
 let g:vista_fzf_preview = ['right:50%']
 " Add items coc doesn't work for here
-let g:vista_executive_for = {
-  \ 'vim': 'ctags',
-  \ 'make': 'ctags',
-  \ }
 let g:vista_close_on_jump = 1
-let g:vista_sidebar_width = 75
+let g:vista_sidebar_width = 70
 
 let g:vista#renderer#enable_icon = 1
 
@@ -263,6 +272,12 @@ function! MapF1()
     exec 'help'
   endif
 endfunction
+
+function! Formatonsave()
+  let l:formatdiff = 1
+  pyf /usr/share/clang/clang-format.py
+endfunction
+autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
 
 source  ~/.dot_files/nvim/fzf.vim
 source  ~/.dot_files/nvim/defx.vim
