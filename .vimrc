@@ -27,6 +27,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Shougo/vinarise'
 Plug 'Shougo/echodoc.vim'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'vhdirk/vim-cmake'
 call plug#end()
 
 set background=dark
@@ -160,6 +161,7 @@ nnoremap <leader>bd :set scrollback=100000<CR>
 nnoremap <leader>ob :Vinarise<CR>
 nnoremap <leader>po :VinarisePluginDump<CR>
 nnoremap <leader>cs :ReloadSleuth<CR>
+nnoremap <leader>cg :ChangeToGnu<CR>
 nnoremap <leader>fs :Vista finder<CR>
 " Go back to previous open file
 nnoremap <leader>gb :e#<CR>
@@ -195,6 +197,8 @@ let g:vista_close_on_jump = 1
 let g:vista_sidebar_width = 70
 
 let g:vista#renderer#enable_icon = 1
+
+let g:vinarise_objdump_intel_assembly = 1
 
 " The default icons can't be suitable for all the filetypes, you can extend it as you wish.
 let g:vista#renderer#icons = {
@@ -277,7 +281,7 @@ function! Formatonsave()
   let l:formatdiff = 1
   pyf /usr/share/clang/clang-format.py
 endfunction
-autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
+"autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
 
 source  ~/.dot_files/nvim/fzf.vim
 source  ~/.dot_files/nvim/defx.vim
