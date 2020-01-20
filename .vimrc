@@ -50,8 +50,8 @@ if get(g:, '_has_set_default_indent_settings', 0) == 0
   let g:_has_set_default_indent_settings = 1
 endif
 
-set wrap
-set textwidth=79
+"set wrap
+"set textwidth=79
 
 set mouse=a
 set ffs=unix,dos,mac

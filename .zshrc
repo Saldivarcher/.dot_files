@@ -37,6 +37,11 @@ alias rust-gdb="rust-gdb -q"
 # If you accidentally leave a directory you can go back with this
 alias back="cd -"
 
+alias l='exa'
+alias la='exa -a'
+alias ll='exa -lah'
+alias ls='exa --color=auto'
+
 # tmux can become wonky at times after an ssh session
 alias reset-display="export DISPLAY=:0.0"
 
@@ -64,3 +69,8 @@ export EDITOR=nvim
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+export PATH="/home/migsaldivar/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+

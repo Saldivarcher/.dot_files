@@ -293,3 +293,5 @@ unbind C-a
 bind u set -g status
 set -g repeat-time 0
 set-option -sa terminal-overrides ',xterm-256color:RGB'
+
+run-shell ~/workspace/misc/tmux-resurrect/resurrect.tmux
