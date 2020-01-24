@@ -28,6 +28,7 @@ Plug 'Shougo/vinarise'
 Plug 'Shougo/echodoc.vim'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'vhdirk/vim-cmake'
+Plug 'rhysd/vim-clang-format'
 call plug#end()
 
 set background=dark
@@ -277,11 +278,12 @@ function! MapF1()
   endif
 endfunction
 
-function! Formatonsave()
-  let l:formatdiff = 1
-  pyf /usr/share/clang/clang-format.py
-endfunction
-"autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
+let g:clang_format#detect_style_file = 1
+let g:clang_format#auto_format = 1
+" Don't auto format when there isn't a `.clang-format` file
+let g:clang_format#enable_fallback_style = 0
+
+autocmd FileType c,cpp ClangFormatAutoEnable
 
 source  ~/.dot_files/nvim/fzf.vim
 source  ~/.dot_files/nvim/defx.vim
