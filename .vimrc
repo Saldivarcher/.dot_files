@@ -190,7 +190,12 @@ tnoremap <Esc> <C-\><C-n>
 autocmd FileType gitcommit setlocal spell
 autocmd FileType markdown  setlocal spell
 
-let g:vista_default_executive = 'ctags'
+let g:vista#executives = ['coc', 'ctags']
+
+let g:vista_executive_for = {
+\  "cpp" : "coc"
+\  }
+
 " Size of code box within fzf search window
 let g:vista_fzf_preview = ['right:50%']
 " Add items coc doesn't work for here
@@ -199,7 +204,7 @@ let g:vista_sidebar_width = 70
 
 let g:vista#renderer#enable_icon = 1
 
-let g:vinarise_objdump_intel_assembly = 1
+let g:vinarise_objdump_intel_assembly = 0
 
 " The default icons can't be suitable for all the filetypes, you can extend it as you wish.
 let g:vista#renderer#icons = {
@@ -282,6 +287,26 @@ let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format = 1
 " Don't auto format when there isn't a `.clang-format` file
 let g:clang_format#enable_fallback_style = 0
+
+
+" Jump to tab: <Leader>t
+function TabName(n)
+    let buflist = tabpagebuflist(a:n)
+    let winnr = tabpagewinnr(a:n)
+    return fnamemodify(bufname(buflist[winnr - 1]), ':t')
+endfunction
+
+function! s:jumpToTab(line)
+    let pair = split(a:line, ' ')
+    let cmd = pair[0].'gt'
+    execute 'normal' cmd
+endfunction
+
+nnoremap <silent> <Leader>sb :call fzf#run({
+\   'source':  reverse(map(range(1, tabpagenr('$')), 'v:val." "." ".TabName(v:val)')),
+\   'sink':    function('<sid>jumpToTab'),
+\   'down':    tabpagenr('$') + 2
+\ })<CR>
 
 autocmd FileType c,cpp ClangFormatAutoEnable
 

@@ -1,0 +1,143 @@
+# Headers {{{1
+ignore *
+unignore from to cc bcc date organization
+unhdr_order *
+hdr_order From: To: Cc: Subject: Date:
+
+# Settings {{{1
+unset abort_unmodified
+set assumed_charset="utf-8:gbk"
+set attach_charset="utf-8:gbk"
+set beep_new
+set charset="utf-8"
+set edit_headers
+set fast_reply
+set forward_format = "Fwd: %s"
+set forward_quote
+set include
+set ispell = "aspell -e -c"
+set mail_check=120
+set menu_scroll
+set pager_context = 5
+set pager_index_lines = 5
+set pager_stop
+set pipe_decode
+set quit
+set read_inc=100
+set realname="Miguel Saldivar"
+set resolve
+set reverse_alias
+set reverse_name
+set rfc2047_parameters=yes
+set search_context=3
+set sendmail="msmtp"
+set sort=threads
+set sort_aux=reverse-last-date-received
+set ssl_force_tls = yes
+set text_flowed
+set timeout = 3
+unset mark_old
+unset markers
+unset reply_to
+unset sort_re
+unset wait_key
+
+# Bindings {{{1
+macro index a "<limit>all\n" "show all messages (undo limit)"
+macro index q '<change-folder>?<toggle-mailboxes>'
+bind index p parent-message
+macro index za "<collapse-thread>" "(un)collapse thread"
+bind index zt current-top
+bind index zz current-middle
+bind index zb current-bottom
+bind index h previous-page
+bind index l next-page
+bind index / limit
+macro index,pager ,p "<pipe-message>cat > /tmp/" "save message as"
+macro index,pager ,z "<shell-escape>offlineimap -q -o<return>" "sync IMAP"
+macro index,pager ,R "<tag-pattern>all<return><tag-prefix><clear-flag>N<untag-pattern>all<return>" "mark all as read"
+macro index,pager ,q \
+  "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch --output \
+  /tmp/.notmuch --prompt search<enter><change-folder-readonly>/tmp/.notmuch<enter>" \
+  "search mail (using notmuch)"
+bind generic,index j next-entry
+bind generic,index k previous-entry
+bind index,pager . next-unread
+bind index,pager J next-new-then-unread
+bind index,pager K previous-new-then-unread
+bind index,pager a create-alias
+bind index,pager N search-opposite
+bind index,pager <esc>k sidebar-prev
+bind index,pager <esc>j sidebar-next
+bind index,pager <esc>o sidebar-open
+bind index,pager B sidebar-toggle-visible
+macro index,pager \Cx0 "<enter-command>source ~/.mutt/local<enter>"
+macro index,pager \Cx1 "<enter-command>source ~/.mutt/remote<enter>"
+macro index,pager A "<pipe-message>abook --add-email-quiet<return>" "add the sender address to abook"
+
+macro index,pager \Cxp "<enter-command>set sendmail=\"proxychains msmtp\"\n" "proxychains msmtp"
+macro index,pager \Cxm "<enter-command>set sendmail=msmtp\n" "msmtp"
+
+macro attach V "<pipe-entry>cat > /tmp/mail.html && $BROWSER /tmp/mail.html<enter>"
+
+bind pager \Cu half-up
+bind pager \Cd half-down
+bind pager p parent-message
+bind pager G bottom
+bind pager h previous-line
+bind pager l next-line
+bind pager H display-toggle-weed
+bind pager N search-opposite
+macro pager \cu "|urlscan\n"
+macro attach \cu "|w3m -T text/html\n"
+
+# Formats {{{1
+set attribution='On %{%F}, %n wrote:'
+set alias_format = "%4n %t %-20a %r"
+set compose_format = "-- Compose %h [Approx. msg size: %l   Atts: %a]%>-"
+set date_format = "%d/%m/%y at %I:%M%P"
+set index_format = "%3C %Z %[!%y-%m-%d] %-17.17F %s"
+set pager_format = "%S [%C/%T] %n %s %> %P  "
+set status_format = "-%r- %f (%s) [%M/%m] [NEW=%n] %?V?[%V]?"
+set status_format = "-%r- [%?M?%M/?%m msgs%?n?, %n new?%?d?, %d del?%?F?, %F flag?%?t?, %t tag?%?p?, %p postp?%?b?, %b inc?%?l?, %l?]--(%f)--%s-%>-%P-"
+
+bind attach ' ' select-entry
+macro attach s <save-message><bol>/tmp/
+
+bind browser $ check-new
+bind browser ' ' select-entry
+macro browser q '<exit><quit>'
+
+# Sidebar {{{1
+set sidebar_width = 40
+set sidebar_visible
+
+# Misc {{{1
+auto_view application/* image/* text/html
+alternative_order text/html text/plain
+mime_lookup application/octet-stream
+
+set sendmail = "/usr/bin/msmtp"
+
+set folder=imaps://imap.gmail.com
+set imap_user=saldivarcher@gmail.com
+set imap_pass=""
+set imap_passive=yes
+set imap_keepalive=300
+unmailboxes *
+
+mailboxes =INBOX =[Gmail]/Drafts =[Gmail]/'Sent Mail' =[Gmail]/Spam
+mailboxes +binutils
+mailboxes +binutils/gold
+mailboxes +gcc
+mailboxes +gcc/gcc-patches
+mailboxes +fail2ban
+mailboxes +llvm-dev
+mailboxes +llvm-dev/lld
+set spoolfile=+INBOX
+set record=~/Mail/sent
+set postponed=+[Gmail]/Drafts
+set record=+[Gmail]/Drafts
+set mbox_type=Maildir
+
+source ~/.dot_files/mutt/theme
