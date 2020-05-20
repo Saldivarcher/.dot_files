@@ -3,7 +3,6 @@ Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim'
 Plug 'jremmen/vim-ripgrep'
-Plug 'raimondi/delimitmate'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'justinmk/vim-sneak'
 if has('unix')
@@ -161,7 +160,7 @@ nnoremap <leader>bs :set scrollback=1<CR>
 nnoremap <leader>bd :set scrollback=100000<CR>
 nnoremap <leader>ob :Vinarise<CR>
 nnoremap <leader>po :VinarisePluginDump<CR>
-nnoremap <leader>cs :ReloadSleuth<CR>
+nnoremap <leader>rs :ReloadSleuth<CR>
 nnoremap <leader>cg :ChangeToGnu<CR>
 nnoremap <leader>fs :Vista finder<CR>
 " Go back to previous open file
@@ -288,6 +287,7 @@ let g:clang_format#auto_format = 1
 " Don't auto format when there isn't a `.clang-format` file
 let g:clang_format#enable_fallback_style = 0
 
+autocmd FileType c,cpp ClangFormatAutoEnable
 
 " Jump to tab: <Leader>t
 function TabName(n)
@@ -305,10 +305,8 @@ endfunction
 nnoremap <silent> <Leader>sb :call fzf#run({
 \   'source':  reverse(map(range(1, tabpagenr('$')), 'v:val." "." ".TabName(v:val)')),
 \   'sink':    function('<sid>jumpToTab'),
-\   'down':    tabpagenr('$') + 2
+\   'up':    tabpagenr('$') + 2
 \ })<CR>
-
-autocmd FileType c,cpp ClangFormatAutoEnable
 
 source  ~/.dot_files/nvim/fzf.vim
 source  ~/.dot_files/nvim/defx.vim

@@ -16,10 +16,11 @@ augroup end
 
 " Install coc extensions for: rust, json, python, viml
 let g:coc_global_extensions = [
-  \ 'coc-rls',
+  \ 'coc-rust-analyzer',
   \ 'coc-json',
   \ 'coc-pyls',
   \ 'coc-vimlsp',
+  \ 'coc-pairs',
   \ ]
 
 function! SetLSPShortcuts()

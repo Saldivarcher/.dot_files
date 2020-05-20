@@ -1,0 +1,19 @@
+{
+  "diagnostic.enable": true,
+  "coc.preferences.jumpCommand": "tab drop",
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "args": ["-log-file=/tmp/ccls.log"],
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "trace.server": "verbose",
+      "initializationOptions": {
+	"cache": {
+	  "directory": "/tmp/ccls"
+	}
+      }
+    }
+  },
+  "pyls.enable": true
+}
